@@ -1,13 +1,13 @@
 pkgname=neomutt
 pkgver=20160723
-pkgrel=1
+pkgrel=2
 pkgdesc='Small but powerful text-based mail client'
 url='http://www.neomutt.org/'
 license=('GPL')
 backup=('etc/Muttrc')
 arch=('i686' 'x86_64')
 depends=('gnupg' 'gpgme' 'krb5' 'libidn' 'libsasl' 'mime-types'
-         'notmuch-runtime' 'openssl' 'tokyocabinet')
+         'notmuch-runtime' 'openssl' 'gdbm')
 conflicts=('mutt')
 provides=('mutt')
 replaces=('mutt-kz' 'mutt-patched')
@@ -20,9 +20,6 @@ build() {
     ./prepare \
         --prefix=/usr \
         --sysconfdir=/etc \
-        --mandir=/usr/share/man \
-        --with-docdir=/usr/share/doc \
-        --with-mailpath=/var/mail \
         --enable-compressed \
         --enable-fcntl \
         --enable-gpgme \
@@ -34,11 +31,10 @@ build() {
         --with-gss=/usr \
         --with-ssl=/usr \
         --with-idn \
-        --without-bdb \
-        --without-gdbm \
-        --without-qdbm \
         --with-regex \
         --with-sasl \
+        --without-bdb \
+        --without-qdbm \
         --enable-sidebar \
         --enable-nntp \
         --enable-notmuch
