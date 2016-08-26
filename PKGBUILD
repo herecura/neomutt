@@ -1,5 +1,5 @@
 pkgname=neomutt
-pkgver=20160822
+pkgver=20160826
 pkgrel=1
 pkgdesc='Small but powerful text-based mail client'
 url='http://www.neomutt.org/'
@@ -13,7 +13,7 @@ conflicts=('mutt')
 provides=('mutt')
 replaces=('mutt-kz' 'mutt-patched')
 source=("https://github.com/neomutt/neomutt/archive/neomutt-$pkgver.tar.gz")
-sha256sums=('acbf21fefee787da4b0410c88cb444445ac9f02848afd96e0080d26e2d9440ea')
+sha256sums=('6b2245c7fd47925f82888f021e26ba570d9610b2cddef2b1c203ac4848d25604')
 
 build() {
     cd "$pkgname-$pkgname-$pkgver"
