@@ -1,6 +1,6 @@
 pkgname=neomutt
 pkgver=20161104
-pkgrel=1
+pkgrel=2
 pkgdesc='Small but powerful text-based mail client'
 url='http://www.neomutt.org/'
 license=('GPL')
@@ -8,7 +8,7 @@ backup=('etc/Muttrc')
 arch=('i686' 'x86_64')
 makedepends=('libxslt' 'w3m')
 depends=('gnupg' 'gpgme' 'krb5' 'libidn' 'libsasl' 'mime-types'
-         'notmuch-runtime' 'openssl' 'gdbm')
+         'notmuch-runtime' 'openssl' 'gdbm' 'slang')
 conflicts=('mutt')
 provides=('mutt')
 replaces=('mutt-kz' 'mutt-patched')
@@ -28,7 +28,7 @@ build() {
         --enable-imap \
         --enable-pop \
         --enable-smtp \
-        --with-curses=/usr \
+        --with-slang=/usr \
         --with-gss=/usr \
         --with-ssl=/usr \
         --with-idn \
