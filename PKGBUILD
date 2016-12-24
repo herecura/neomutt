@@ -1,19 +1,19 @@
 pkgname=neomutt
-pkgver=20161104
-pkgrel=2
+pkgver=20161126
+pkgrel=1
 pkgdesc='Small but powerful text-based mail client'
 url='http://www.neomutt.org/'
 license=('GPL')
 backup=('etc/Muttrc')
 arch=('i686' 'x86_64')
-makedepends=('libxslt' 'w3m')
-depends=('gnupg' 'gpgme' 'krb5' 'libidn' 'libsasl' 'mime-types'
-         'notmuch-runtime' 'openssl' 'gdbm' 'slang')
+depends=('openssl' 'gdbm' 'mime-types' 'libsasl' 'gnupg' 'gpgme' 'libidn' 'krb5' 'notmuch-runtime')
+optdepends=('urlview: for url menu')
+makedepends=('libxslt' 'w3m' 'gnupg')
 conflicts=('mutt')
 provides=('mutt')
 replaces=('mutt-kz' 'mutt-patched')
 source=("https://github.com/neomutt/neomutt/archive/neomutt-$pkgver.tar.gz")
-sha256sums=('198379db86b7d54238523f2664f3975fe7d71db2ac18ce55085c3ed40eec7356')
+sha256sums=('c08ca66519b9b63acffcf37f5447905279e440bf44efbe0e9d5af4ee772456f1')
 
 build() {
     cd "$pkgname-$pkgname-$pkgver"
@@ -21,24 +21,24 @@ build() {
     ./prepare \
         --prefix=/usr \
         --sysconfdir=/etc \
-        --enable-compressed \
-        --enable-fcntl \
+        --enable-pgp \
         --enable-gpgme \
-        --enable-hcache \
-        --enable-imap \
+        --enable-notmuch \
         --enable-pop \
+        --enable-imap \
         --enable-smtp \
-        --with-slang=/usr \
+        --enable-hcache \
+        --enable-sidebar \
+        --enable-compressed \
         --with-gss=/usr \
         --with-ssl=/usr \
-        --with-idn \
-        --with-regex \
         --with-sasl \
-        --without-bdb \
-        --without-qdbm \
-        --enable-sidebar \
+        --with-curses=/usr \
+        --with-regex \
+        --with-idn \
+        --with-gdbm \
         --enable-nntp \
-        --enable-notmuch
+        --enable-fcntl
 
     make
 }
@@ -48,6 +48,5 @@ package() {
     make DESTDIR="${pkgdir}" install
 
     rm "${pkgdir}"/etc/mime.types{,.dist}
-    install -D -m 644 contrib/gpg.rc "$pkgdir"/etc/Muttrc.gpg.dist
 }
 
