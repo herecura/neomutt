@@ -1,6 +1,6 @@
 pkgname=neomutt
 pkgver=20170907
-pkgrel=1
+pkgrel=2
 pkgdesc='Small but powerful text-based mail client'
 url='http://www.neomutt.org/'
 license=('GPL')
