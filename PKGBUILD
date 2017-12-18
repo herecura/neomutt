@@ -1,45 +1,46 @@
 pkgname=neomutt
-pkgver=20171208
+pkgver=20171215
 pkgrel=1
 pkgdesc='Small but powerful text-based mail client'
 url='http://www.neomutt.org/'
 license=('GPL')
-backup=('etc/Muttrc')
 arch=('x86_64')
-depends=('openssl' 'gdbm' 'mime-types' 'libsasl' 'gnupg' 'gpgme' 'libidn' 'krb5' 'notmuch-runtime')
-optdepends=('urlview: for url menu')
-makedepends=('libxslt' 'w3m' 'gnupg')
-conflicts=('mutt')
-provides=('mutt')
-replaces=('mutt-kz' 'mutt-patched')
-source=("https://github.com/neomutt/neomutt/archive/neomutt-$pkgver.tar.gz")
-sha256sums=('9fdf28d73a893ad5dfc77f6d8662b599e92c73e6a7ff24c0db4673924e3dd735')
+depends=('mime-types' 'notmuch-runtime' 'lua' 'lmdb')
+optdepends=(
+    'urlview: for url menu'
+    'python: keybase.py'
+)
+makedepends=('git' 'gnupg' 'libxslt' 'docbook-xsl')
+source=("https://github.com/neomutt/neomutt/archive/$pkgname-$pkgver.tar.gz"
+        "https://github.com/neomutt/neomutt/releases/download/$pkgname-$pkgver/$pkgname-$pkgver.tar.gz.sig")
+sha256sums=('7fb76e99a9f23715ad772ad8f7008c6e2db05eed344817055176c76dbd60c1b5'
+            'SKIP')
+validpgpkeys=('86C2397270DD7A561263CA4E5FAF0A6EE7371805') # Richard Russon (flatcap) <rich@flatcap.org>
 
 build() {
     cd "$pkgname-$pkgname-$pkgver"
 
-    ./prepare \
+    ./configure \
         --prefix=/usr \
         --sysconfdir=/etc \
-        --enable-pgp \
-        --enable-gpgme \
-        --enable-notmuch \
-        --enable-pop \
-        --enable-imap \
-        --enable-smtp \
-        --enable-hcache \
-        --enable-sidebar \
-        --enable-compressed \
         --with-gss=/usr \
         --with-ssl=/usr \
-        --with-sasl \
-        --with-curses=/usr \
-        --with-regex \
-        --with-idn \
-        --with-gdbm \
-        --enable-nntp \
-        --enable-fcntl
-
+        --with-sasl=/usr \
+        --disable-fcntl \
+        --disable-idn \
+        --disable-nls \
+        --disable-pgp \
+        --disable-smime \
+        --bdb \
+        --flock \
+        --gdbm \
+        --gnutls \
+        --gpgme \
+        --lmdb \
+        --lua \
+        --notmuch \
+        --sasl
+    
     make
 }
 
@@ -47,4 +48,3 @@ package() {
     cd "$pkgname-$pkgname-$pkgver"
     make DESTDIR="${pkgdir}" install
 }
-
